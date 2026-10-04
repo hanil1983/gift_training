@@ -75,36 +75,32 @@ st.markdown(
 
     .st-key-reset_top {
         width: 100% !important;
-        display: flex !important;
-        justify-content: flex-end !important;
-        align-items: center !important;
-        margin-left: auto !important;
-        padding-right: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .st-key-reset_top > div,
-    .st-key-reset_top div[data-testid="stVerticalBlock"] {
-        width: 100% !important;
-    }
-
+    .st-key-reset_top div[data-testid="stVerticalBlock"],
     .st-key-reset_top div[data-testid="stButton"] {
-        width: 68px !important;
-        margin-left: auto !important;
-        margin-right: 0 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     .st-key-reset_top button {
-        width: 68px !important;
-        min-width: 68px !important;
-        max-width: 68px !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
         height: 30px !important;
         min-height: 30px !important;
-        padding: 0 !important;
+        padding: 0 0.12rem !important;
         margin: 0 !important;
-        font-size: 0.74rem !important;
+        font-size: 0.70rem !important;
         font-weight: 650 !important;
         white-space: nowrap !important;
         border-radius: 7px !important;
+        box-sizing: border-box !important;
     }
 
     div[data-testid="stMetric"] {
@@ -297,6 +293,63 @@ st.markdown(
 
     .bottom-safe-area {
         height: calc(42px + env(safe-area-inset-bottom));
+    }
+
+    @media (max-width: 600px) {
+        .block-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding-left: 0.48rem !important;
+            padding-right: 0.48rem !important;
+            box-sizing: border-box !important;
+        }
+
+        .st-key-reset_top,
+        .st-key-reset_top > div,
+        .st-key-reset_top div[data-testid="stVerticalBlock"],
+        .st-key-reset_top div[data-testid="stButton"],
+        .st-key-reset_top button {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stHorizontalBlock"] {
+            gap: 0.10rem !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stColumn"],
+        .st-key-trade_controls div[data-testid="column"] {
+            min-width: 0 !important;
+        }
+
+        .st-key-trade_controls div[data-baseweb="select"],
+        .st-key-trade_controls div[data-baseweb="select"] > div {
+            min-width: 0 !important;
+            width: 100% !important;
+        }
+
+        .st-key-trade_controls div[data-baseweb="select"] > div {
+            padding-left: 0.08rem !important;
+            padding-right: 0.04rem !important;
+        }
+
+        .st-key-trade_controls div[data-baseweb="select"] svg {
+            width: 13px !important;
+            min-width: 13px !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stNumberInput"] input {
+            padding-left: 0.05rem !important;
+            padding-right: 0.05rem !important;
+            font-size: 0.76rem !important;
+        }
+
+        .st-key-pct_minus_wrap button,
+        .st-key-pct_plus_wrap button {
+            font-size: 0.68rem !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
     }
 
     @media (max-width: 380px) {
@@ -1183,7 +1236,7 @@ def make_chart(df):
 # ============================================================
 
 title_col, reset_col = st.columns(
-    [1.35, 1.0],
+    [4.2, 1.0],
     gap="small",
     vertical_alignment="center",
 )
@@ -1199,6 +1252,7 @@ with reset_col:
             "↻ 초기화",
             key="reset_game_top",
             on_click=reset_game_state,
+            use_container_width=True,
         )
 
 
@@ -1400,7 +1454,7 @@ if not st.session_state.position_open:
 
     with st.container(key="trade_controls"):
         c1, c2, c3, c4, c5 = st.columns(
-            [0.62, 1.80, 0.62, 1.18, 0.62],
+            [0.50, 1.60, 0.50, 0.75, 0.85],
             gap="small",
             vertical_alignment="bottom",
         )
