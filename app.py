@@ -1329,17 +1329,16 @@ def make_chart(df):
 # 상단
 # ============================================================
 
-st.markdown(
-    "### 💰 $1000 챌린지 Rev2"
-)
-
-# 초기화 버튼은 별도 행의 왼쪽에 둡니다.
-# 모바일에서 화면 오른쪽으로 밀려 잘리는 문제를 원천적으로 방지합니다.
-reset_col, reset_spacer_col = st.columns(
-    [0.95, 3.05],
+title_col, reset_col = st.columns(
+    [3.0, 1.0],
     gap="small",
     vertical_alignment="center",
 )
+
+with title_col:
+    st.markdown(
+        "### 💰 $1000 챌린지 Rev2"
+    )
 
 with reset_col:
     with st.container(key="reset_top"):
