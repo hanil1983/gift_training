@@ -84,8 +84,8 @@ st.markdown(
 
     .st-key-reset_top button {
         width: 68px !important;
-        min-width: 68px !important;
-        max-width: 68px !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
         height: 30px !important;
         min-height: 30px !important;
         padding: 0 !important;
@@ -453,6 +453,11 @@ defaults = {
     "closed_pnls": [],
 
     "last_trade": None,
+
+    # 현재 시나리오 차트에 표시할 매수/매도 위치
+    # [{"type": "B"|"S", "idx": int, "price": float}, ...]
+    "trade_markers": [],
+
     "status_message": None,
 }
 
@@ -758,6 +763,7 @@ def start_new_scenario(df, keep_bank=True):
     st.session_state.position_notional = 0.0
 
     st.session_state.last_trade = None
+    st.session_state.trade_markers = []
     st.session_state.status_message = None
 
     refresh_controls_after_cash_change()
@@ -783,6 +789,7 @@ def reset_game_state():
     st.session_state.closed_pnls = []
 
     st.session_state.last_trade = None
+    st.session_state.trade_markers = []
     st.session_state.status_message = None
 
     st.session_state.scenario_start_idx = None
@@ -818,6 +825,14 @@ def open_position(df):
     st.session_state.position_leverage = leverage
     st.session_state.position_notional = (
         margin * leverage
+    )
+
+    st.session_state.trade_markers.append(
+        {
+            "type": "B",
+            "idx": st.session_state.current_idx,
+            "price": price,
+        }
     )
 
     st.session_state.last_trade = None
@@ -885,6 +900,14 @@ def close_position(df, reason="SELL", exit_price=None):
         "entry_date": str(entry_date),
         "exit_date": str(exit_date),
     }
+
+    st.session_state.trade_markers.append(
+        {
+            "type": "S",
+            "idx": st.session_state.current_idx,
+            "price": float(exit_price),
+        }
+    )
 
     if reason == "LIQUIDATION":
         st.session_state.status_message = (
@@ -1021,6 +1044,98 @@ def make_chart(df):
             col=1,
         )
 
+    # --------------------------------------------------------
+    # 매수(B) / 매도(S) 마커
+    # 현재 화면에 보이는 봉 범위에 해당하는 거래만 표시합니다.
+    # B는 봉 아래, S는 봉 위에 배치합니다.
+    # --------------------------------------------------------
+    visible_markers = [
+        marker
+        for marker in st.session_state.trade_markers
+        if start_idx <= marker["idx"] <= current_idx
+    ]
+
+    if visible_markers:
+        price_span = float(
+            chart_df["High"].max()
+            - chart_df["Low"].min()
+        )
+
+        marker_gap = (
+            price_span * 0.035
+            if price_span > 0
+            else max(current_price(df) * 0.003, 1e-8)
+        )
+
+        buy_x = []
+        buy_y = []
+        sell_x = []
+        sell_y = []
+
+        for marker in visible_markers:
+            absolute_idx = marker["idx"]
+            local_x = absolute_idx - start_idx + 1
+            candle = df.iloc[absolute_idx]
+
+            if marker["type"] == "B":
+                buy_x.append(local_x)
+                buy_y.append(
+                    float(candle["Low"]) - marker_gap
+                )
+            else:
+                sell_x.append(local_x)
+                sell_y.append(
+                    float(candle["High"]) + marker_gap
+                )
+
+        if buy_x:
+            fig.add_trace(
+                go.Scatter(
+                    x=buy_x,
+                    y=buy_y,
+                    mode="markers+text",
+                    text=["B"] * len(buy_x),
+                    textposition="bottom center",
+                    textfont=dict(
+                        size=13,
+                        color="#16a34a",
+                    ),
+                    marker=dict(
+                        symbol="triangle-up",
+                        size=10,
+                        color="#16a34a",
+                    ),
+                    hoverinfo="skip",
+                    cliponaxis=False,
+                ),
+                row=1,
+                col=1,
+            )
+
+        if sell_x:
+            fig.add_trace(
+                go.Scatter(
+                    x=sell_x,
+                    y=sell_y,
+                    mode="markers+text",
+                    text=["S"] * len(sell_x),
+                    textposition="top center",
+                    textfont=dict(
+                        size=13,
+                        color="#dc2626",
+                    ),
+                    marker=dict(
+                        symbol="triangle-down",
+                        size=10,
+                        color="#dc2626",
+                    ),
+                    hoverinfo="skip",
+                    cliponaxis=False,
+                ),
+                row=1,
+                col=1,
+            )
+
     fig.update_xaxes(
         fixedrange=True,
         showgrid=False,
@@ -1057,7 +1172,7 @@ def make_chart(df):
 # ============================================================
 
 title_col, reset_col = st.columns(
-    [7.0, 1.0],
+    [1.35, 1.0],
     gap="small",
     vertical_alignment="center",
 )
@@ -1274,7 +1389,7 @@ if not st.session_state.position_open:
 
     with st.container(key="trade_controls"):
         c1, c2, c3, c4, c5 = st.columns(
-            [0.62, 3.20, 0.62, 1.18, 0.62],
+            [0.62, 1.80, 0.62, 1.18, 0.62],
             gap="small",
             vertical_alignment="bottom",
         )
