@@ -672,6 +672,85 @@ st.markdown(
         }
     }
 
+    /* ========================================================
+       Compact rows
+       자산 / 성과 / 투자정보 / 매도결과의 높이만 줄임
+       ======================================================== */
+    .st-key-compact_assets div[data-testid="stMetric"],
+    .st-key-compact_performance div[data-testid="stMetric"],
+    .st-key-compact_position div[data-testid="stMetric"],
+    .st-key-compact_result div[data-testid="stMetric"] {
+        min-height: 36px !important;
+        height: 36px !important;
+        padding: 1px 2px !important;
+        border-radius: 8px !important;
+    }
+
+    .st-key-compact_assets div[data-testid="stMetricLabel"] p,
+    .st-key-compact_performance div[data-testid="stMetricLabel"] p,
+    .st-key-compact_position div[data-testid="stMetricLabel"] p,
+    .st-key-compact_result div[data-testid="stMetricLabel"] p {
+        font-size: 0.59rem !important;
+        line-height: 1.0 !important;
+        margin: 0 !important;
+    }
+
+    .st-key-compact_assets div[data-testid="stMetricValue"],
+    .st-key-compact_performance div[data-testid="stMetricValue"],
+    .st-key-compact_position div[data-testid="stMetricValue"],
+    .st-key-compact_result div[data-testid="stMetricValue"] {
+        font-size: 0.76rem !important;
+        line-height: 1.0 !important;
+        margin: 0 !important;
+    }
+
+    .st-key-compact_assets,
+    .st-key-compact_performance,
+    .st-key-compact_position,
+    .st-key-compact_result {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .st-key-compact_assets div[data-testid="stHorizontalBlock"],
+    .st-key-compact_performance div[data-testid="stHorizontalBlock"],
+    .st-key-compact_position div[data-testid="stHorizontalBlock"],
+    .st-key-compact_result div[data-testid="stHorizontalBlock"] {
+        gap: 0.16rem !important;
+    }
+
+    @media (max-width: 600px) {
+        .st-key-compact_assets div[data-testid="stMetric"],
+        .st-key-compact_performance div[data-testid="stMetric"],
+        .st-key-compact_position div[data-testid="stMetric"],
+        .st-key-compact_result div[data-testid="stMetric"] {
+            min-height: 34px !important;
+            height: 34px !important;
+            padding: 0 1px !important;
+        }
+
+        .st-key-compact_assets div[data-testid="stMetricLabel"] p,
+        .st-key-compact_performance div[data-testid="stMetricLabel"] p,
+        .st-key-compact_position div[data-testid="stMetricLabel"] p,
+        .st-key-compact_result div[data-testid="stMetricLabel"] p {
+            font-size: 0.56rem !important;
+        }
+
+        .st-key-compact_assets div[data-testid="stMetricValue"],
+        .st-key-compact_performance div[data-testid="stMetricValue"],
+        .st-key-compact_position div[data-testid="stMetricValue"],
+        .st-key-compact_result div[data-testid="stMetricValue"] {
+            font-size: 0.72rem !important;
+        }
+
+        /* 상태 메시지도 한 줄로 더 compact하게 */
+        div[data-testid="stAlert"] {
+            padding: 0.20rem 0.32rem !important;
+            margin: 0.08rem 0 !important;
+            font-size: 0.74rem !important;
+        }
+    }
+
     </style>
     """,
     unsafe_allow_html=True,
@@ -1557,7 +1636,7 @@ def make_chart(df):
     )
 
     fig.update_layout(
-        height=280,
+        height=245,
         margin=dict(
             l=5,
             r=5,
@@ -1698,52 +1777,54 @@ total_return = (
 )
 
 
-m1, m2, m3, m4 = st.columns(4)
+with st.container(key="compact_assets"):
+    m1, m2, m3, m4 = st.columns(4)
 
-with m1:
-    st.metric(
-        "현금",
-        f"${st.session_state.cash:,.2f}",
-    )
+    with m1:
+        st.metric(
+            "현금",
+            f"${st.session_state.cash:,.2f}",
+        )
 
-with m2:
-    st.metric(
-        "총자산",
-        f"${equity:,.2f}",
-    )
+    with m2:
+        st.metric(
+            "총자산",
+            f"${equity:,.2f}",
+        )
 
-with m3:
-    st.metric(
-        "누적손익",
-        f"${total_pnl:+,.2f}",
-    )
+    with m3:
+        st.metric(
+            "누적손익",
+            f"${total_pnl:+,.2f}",
+        )
 
-with m4:
-    st.metric(
-        "수익률",
-        f"{total_return:+.1f}%",
-    )
+    with m4:
+        st.metric(
+            "수익률",
+            f"{total_return:+.1f}%",
+        )
 
 
-p1, p2, p3 = st.columns(3)
+with st.container(key="compact_performance"):
+    p1, p2, p3 = st.columns(3)
 
-with p1:
-    st.metric(
-        "손익비",
-        payoff_ratio(df),
-    )
+    with p1:
+        st.metric(
+            "손익비",
+            payoff_ratio(df),
+        )
 
-with p2:
-    st.metric(
-        "거래",
-        st.session_state.trades,
-    )
+    with p2:
+        st.metric(
+            "거래",
+            st.session_state.trades,
+        )
 
-with p3:
-    st.metric(
-        "승률",
-        f"{win_rate():.0f}%",
-    )
+    with p3:
+        st.metric(
+            "승률",
+            f"{win_rate():.0f}%",
+        )
 
 
 # ============================================================
@@ -1876,25 +1957,26 @@ if not st.session_state.position_open:
         * st.session_state.leverage
     )
 
-    q1, q2, q3 = st.columns(3)
+    with st.container(key="compact_position"):
+        q1, q2, q3 = st.columns(3)
 
-    with q1:
-        st.metric(
-            "투자금",
-            f"${margin:,.2f}",
-        )
+        with q1:
+            st.metric(
+                "투자금",
+                f"${margin:,.2f}",
+            )
 
-    with q2:
-        st.metric(
-            "포지션",
-            f"${notional:,.2f}",
-        )
+        with q2:
+            st.metric(
+                "포지션",
+                f"${notional:,.2f}",
+            )
 
-    with q3:
-        st.metric(
-            "레버리지",
-            f"{st.session_state.leverage}x",
-        )
+        with q3:
+            st.metric(
+                "레버리지",
+                f"{st.session_state.leverage}x",
+            )
 
 
 # ============================================================
@@ -2054,38 +2136,39 @@ if st.session_state.last_trade:
 
     # 매도/청산 결과 알림은 위의 status_message에서 한 번만 표시합니다.
     # 중복되던 "거래 종료" 메시지는 제거했습니다.
-    t1, t2, t3, t4 = st.columns(4)
+    with st.container(key="compact_result"):
+        t1, t2, t3, t4 = st.columns(4)
 
-    with t1:
-        st.metric(
-            "매수가",
-            format_price(
-                trade["entry_price"]
-            ),
-        )
+        with t1:
+            st.metric(
+                "매수가",
+                format_price(
+                    trade["entry_price"]
+                ),
+            )
 
-    with t2:
-        st.metric(
-            "매도가",
-            format_price(
-                trade["exit_price"]
-            ),
-        )
+        with t2:
+            st.metric(
+                "매도가",
+                format_price(
+                    trade["exit_price"]
+                ),
+            )
 
-    with t3:
-        st.metric(
-            "가격수익률",
-            f"{trade['price_return']:+.2f}%",
-        )
+        with t3:
+            st.metric(
+                "가격수익률",
+                f"{trade['price_return']:+.2f}%",
+            )
 
-    with t4:
-        st.metric(
-            "보유",
-            holding_period_text(
-                trade["holding_steps"],
-                timeframe,
-            ),
-        )
+        with t4:
+            st.metric(
+                "보유",
+                holding_period_text(
+                    trade["holding_steps"],
+                    timeframe,
+                ),
+            )
 
 
 
