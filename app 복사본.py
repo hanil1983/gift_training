@@ -13,8 +13,8 @@ from plotly.subplots import make_subplots
 # ============================================================
 
 st.set_page_config(
-    page_title="가상 선물 투자",
-    page_icon="📈",
+    page_title="$1000 챌린지 Rev2",
+    page_icon="💰",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
@@ -453,225 +453,6 @@ st.markdown(
             --button-size: 0.78rem;
         }
     }
-
-    /* ========================================================
-       Visual polish
-       기존 배치는 그대로 두고 색상 / 정렬 / 카드 느낌만 개선
-       ======================================================== */
-
-    :root {
-        --app-bg: #f5f7fb;
-        --card-bg: #ffffff;
-        --border: #e4e9f1;
-        --text-main: #172033;
-        --text-sub: #6b768a;
-        --accent: #2563eb;
-        --accent-soft: #eff6ff;
-        --green: #16a34a;
-        --red: #dc2626;
-        --dark-button: #263244;
-    }
-
-    .stApp {
-        background:
-            radial-gradient(
-                circle at 50% -80px,
-                rgba(37, 99, 235, 0.08),
-                transparent 240px
-            ),
-            var(--app-bg) !important;
-    }
-
-    .block-container {
-        color: var(--text-main) !important;
-    }
-
-    /* 제목 */
-    h3 {
-        color: var(--text-main) !important;
-        font-weight: 800 !important;
-        letter-spacing: -0.025em !important;
-    }
-
-    /* 상단 초기화 */
-    .st-key-reset_top button {
-        background: #ffffff !important;
-        color: #526076 !important;
-        border: 1px solid var(--border) !important;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
-    }
-
-    .st-key-reset_top button:hover {
-        color: var(--accent) !important;
-        border-color: #b9cdf8 !important;
-        background: #f8fbff !important;
-    }
-
-    /* 종목 / 시간봉 / 레버리지 선택창 */
-    div[data-baseweb="select"] > div {
-        background: var(--card-bg) !important;
-        border-color: var(--border) !important;
-        border-radius: 9px !important;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.035) !important;
-    }
-
-    div[data-baseweb="select"] > div > div:first-child {
-        display: flex !important;
-        justify-content: center !important;
-        text-align: center !important;
-        color: var(--text-main) !important;
-    }
-
-    /* 숫자 입력 */
-    div[data-testid="stNumberInput"] [data-baseweb="input"] {
-        background: var(--card-bg) !important;
-        border-color: var(--border) !important;
-        border-radius: 9px !important;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.035) !important;
-    }
-
-    div[data-testid="stNumberInput"] input {
-        color: var(--text-main) !important;
-    }
-
-    /* Metric 카드 */
-    div[data-testid="stMetric"] {
-        background: var(--card-bg) !important;
-        border: 1px solid var(--border) !important;
-        border-radius: 10px !important;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.045) !important;
-        min-height: 48px !important;
-        padding: 5px 3px !important;
-    }
-
-    div[data-testid="stMetricLabel"],
-    div[data-testid="stMetricLabel"] p {
-        color: var(--text-sub) !important;
-        font-weight: 600 !important;
-        letter-spacing: -0.01em !important;
-        text-align: center !important;
-        justify-content: center !important;
-    }
-
-    div[data-testid="stMetricValue"] {
-        color: var(--text-main) !important;
-        font-weight: 760 !important;
-        letter-spacing: -0.015em !important;
-        text-align: center !important;
-    }
-
-    /* 일반 버튼 */
-    .stButton > button {
-        background: var(--card-bg) !important;
-        color: #46536a !important;
-        border: 1px solid var(--border) !important;
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.035) !important;
-        transition:
-            border-color 0.15s ease,
-            background 0.15s ease,
-            color 0.15s ease !important;
-    }
-
-    .stButton > button:hover {
-        color: var(--accent) !important;
-        border-color: #b8caf4 !important;
-        background: #f8fbff !important;
-    }
-
-    /* Streamlit primary 버튼:
-       기간 선택 버튼에서 현재 선택 범위를 파란색으로 강조 */
-    button[data-testid="stBaseButton-primary"] {
-        background: var(--accent) !important;
-        color: #ffffff !important;
-        border-color: var(--accent) !important;
-        box-shadow: 0 2px 5px rgba(37, 99, 235, 0.18) !important;
-    }
-
-    button[data-testid="stBaseButton-primary"]:hover {
-        background: #1d4ed8 !important;
-        color: #ffffff !important;
-        border-color: #1d4ed8 !important;
-    }
-
-    /* 매수 / 매도 / 다음 봉은 의미 색상을 유지 */
-    .st-key-buy_area button {
-        background: var(--green) !important;
-        color: #ffffff !important;
-        border-color: var(--green) !important;
-        box-shadow: 0 2px 5px rgba(22, 163, 74, 0.16) !important;
-    }
-
-    .st-key-sell_area button {
-        background: var(--red) !important;
-        color: #ffffff !important;
-        border-color: var(--red) !important;
-        box-shadow: 0 2px 5px rgba(220, 38, 38, 0.15) !important;
-    }
-
-    .st-key-next_day_area button {
-        background: var(--dark-button) !important;
-        color: #ffffff !important;
-        border-color: var(--dark-button) !important;
-        box-shadow: 0 2px 5px rgba(38, 50, 68, 0.15) !important;
-    }
-
-    /* 투자 비중 ± 버튼은 중립적인 보조 버튼 */
-    .st-key-pct_minus_wrap button,
-    .st-key-pct_plus_wrap button {
-        background: #f8fafc !important;
-        color: #536176 !important;
-        border-color: var(--border) !important;
-    }
-
-    /* 투자 컨트롤 제목 */
-    .st-key-trade_controls label[data-testid="stWidgetLabel"],
-    .st-key-trade_controls label[data-testid="stWidgetLabel"] p {
-        color: var(--text-sub) !important;
-        font-weight: 600 !important;
-        text-align: center !important;
-    }
-
-    /* Slider */
-    div[data-baseweb="slider"] [role="slider"] {
-        background: var(--accent) !important;
-        border-color: var(--accent) !important;
-        box-shadow: 0 0 0 2px #ffffff,
-                    0 0 0 3px rgba(37, 99, 235, 0.22) !important;
-    }
-
-    /* 차트 영역을 하나의 카드처럼 */
-    div[data-testid="stPlotlyChart"] {
-        background: var(--card-bg) !important;
-        border: 1px solid var(--border) !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.045) !important;
-    }
-
-    /* 안내/결과 메시지 */
-    div[data-testid="stAlert"] {
-        border-radius: 9px !important;
-        border-width: 1px !important;
-        box-shadow: none !important;
-    }
-
-    @media (max-width: 600px) {
-        /* 모바일에서 카드 간격을 아주 조금만 여유 있게 */
-        div[data-testid="stMetric"] {
-            min-height: 47px !important;
-            border-radius: 9px !important;
-        }
-
-        h3 {
-            color: var(--text-main) !important;
-        }
-
-        /* 기존 모바일 강제 열 너비는 유지 */
-        .st-key-trade_controls div[data-testid="stHorizontalBlock"] {
-            gap: 0 !important;
-        }
-    }
-
     </style>
     """,
     unsafe_allow_html=True,
@@ -889,37 +670,6 @@ def next_step_label(timeframe):
         "4시간": "➡️ 다음 4시간",
         "일봉": "➡️ 다음날",
     }
-    return labels[timeframe]
-
-
-def chart_range_labels(timeframe):
-    """
-    기존 25/50/100봉을 유지하면서 사용자가 실제 기간을
-    직관적으로 이해할 수 있도록 버튼 표시명을 바꿉니다.
-    """
-    labels = {
-        "15분": {
-            25: "6시간",
-            50: "12시간",
-            100: "1일",
-        },
-        "1시간": {
-            25: "1일",
-            50: "2일",
-            100: "4일",
-        },
-        "4시간": {
-            25: "4일",
-            50: "8일",
-            100: "17일",
-        },
-        "일봉": {
-            25: "1개월",
-            50: "2개월",
-            100: "3개월",
-        },
-    }
-
     return labels[timeframe]
 
 
@@ -1552,7 +1302,7 @@ def make_chart(df):
 
     fig.update_yaxes(
         fixedrange=True,
-        gridcolor="rgba(100,116,139,0.12)",
+        gridcolor="rgba(128,128,128,0.18)",
         zeroline=False,
     )
 
@@ -1587,7 +1337,7 @@ title_col, reset_col = st.columns(
 
 with title_col:
     st.markdown(
-        "### 📈 가상 선물 투자"
+        "### 💰 $1000 챌린지 Rev2"
     )
 
 with reset_col:
@@ -1752,7 +1502,7 @@ with p3:
 
 if bankrupt:
     st.error(
-        "💥 파산 · 가상 선물 투자 종료"
+        "💥 파산 · $1000 챌린지 Rev2 종료"
     )
 
     st.button(
@@ -1951,7 +1701,7 @@ z1, z2, z3 = st.columns(3)
 
 with z1:
     if st.button(
-        chart_range_labels(timeframe)[25],
+        "25봉",
         use_container_width=True,
         key="rev2_z25",
         type=(
@@ -1965,7 +1715,7 @@ with z1:
 
 with z2:
     if st.button(
-        chart_range_labels(timeframe)[50],
+        "50봉",
         use_container_width=True,
         key="rev2_z50",
         type=(
@@ -1979,7 +1729,7 @@ with z2:
 
 with z3:
     if st.button(
-        chart_range_labels(timeframe)[100],
+        "100봉",
         use_container_width=True,
         key="rev2_z100",
         type=(
