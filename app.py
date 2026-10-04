@@ -75,8 +75,12 @@ st.markdown(
 
     .st-key-reset_top {
         width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
     }
 
     .st-key-reset_top > div,
@@ -84,8 +88,10 @@ st.markdown(
     .st-key-reset_top div[data-testid="stButton"] {
         width: 100% !important;
         min-width: 0 !important;
+        max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
+        box-sizing: border-box !important;
     }
 
     .st-key-reset_top button {
@@ -94,13 +100,14 @@ st.markdown(
         max-width: 100% !important;
         height: 30px !important;
         min-height: 30px !important;
-        padding: 0 0.12rem !important;
+        padding: 0 0.08rem !important;
         margin: 0 !important;
-        font-size: 0.70rem !important;
+        font-size: 0.68rem !important;
         font-weight: 650 !important;
         white-space: nowrap !important;
         border-radius: 7px !important;
         box-sizing: border-box !important;
+        overflow: hidden !important;
     }
 
     div[data-testid="stMetric"] {
@@ -314,23 +321,38 @@ st.markdown(
         }
 
         .st-key-trade_controls div[data-testid="stHorizontalBlock"] {
-            gap: 0.10rem !important;
+            gap: 0.06rem !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         .st-key-trade_controls div[data-testid="stColumn"],
         .st-key-trade_controls div[data-testid="column"] {
             min-width: 0 !important;
+            max-width: 100% !important;
+            overflow: visible !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stSlider"],
+        .st-key-trade_controls div[data-testid="stSlider"] > div {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         .st-key-trade_controls div[data-baseweb="select"],
         .st-key-trade_controls div[data-baseweb="select"] > div {
             min-width: 0 !important;
             width: 100% !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
 
         .st-key-trade_controls div[data-baseweb="select"] > div {
-            padding-left: 0.08rem !important;
-            padding-right: 0.04rem !important;
+            padding-left: 0.12rem !important;
+            padding-right: 0.10rem !important;
         }
 
         .st-key-trade_controls div[data-baseweb="select"] svg {
@@ -338,17 +360,38 @@ st.markdown(
             min-width: 13px !important;
         }
 
+        .st-key-trade_controls div[data-testid="stNumberInput"],
+        .st-key-trade_controls div[data-testid="stNumberInput"] > div {
+            min-width: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
         .st-key-trade_controls div[data-testid="stNumberInput"] input {
-            padding-left: 0.05rem !important;
-            padding-right: 0.05rem !important;
-            font-size: 0.76rem !important;
+            padding-left: 0.04rem !important;
+            padding-right: 0.04rem !important;
+            font-size: 0.73rem !important;
         }
 
         .st-key-pct_minus_wrap button,
         .st-key-pct_plus_wrap button {
-            font-size: 0.68rem !important;
+            font-size: 0.64rem !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
+            min-width: 0 !important;
+            width: 100% !important;
+        }
+    }
+
+    @media (max-width: 600px) {
+        h3 {
+            font-size: 0.98rem !important;
+            line-height: 30px !important;
+            letter-spacing: -0.02em !important;
+        }
+
+        .st-key-reset_top button {
+            font-size: 0.66rem !important;
         }
     }
 
@@ -1236,7 +1279,7 @@ def make_chart(df):
 # ============================================================
 
 title_col, reset_col = st.columns(
-    [4.2, 1.0],
+    [3.0, 1.0],
     gap="small",
     vertical_alignment="center",
 )
@@ -1454,7 +1497,7 @@ if not st.session_state.position_open:
 
     with st.container(key="trade_controls"):
         c1, c2, c3, c4, c5 = st.columns(
-            [0.50, 1.60, 0.50, 0.75, 0.85],
+            [0.38, 1.00, 0.38, 0.72, 1.04],
             gap="small",
             vertical_alignment="bottom",
         )
