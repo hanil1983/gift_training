@@ -73,15 +73,7 @@ st.markdown(
         padding: 0 !important;
     }
 
-    .st-key-reset_top {
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        box-sizing: border-box !important;
-    }
-
+    .st-key-reset_top,
     .st-key-reset_top > div,
     .st-key-reset_top div[data-testid="stVerticalBlock"],
     .st-key-reset_top div[data-testid="stButton"] {
@@ -99,9 +91,9 @@ st.markdown(
         max-width: 100% !important;
         height: 30px !important;
         min-height: 30px !important;
-        padding: 0 0.04rem !important;
         margin: 0 !important;
-        font-size: 0.66rem !important;
+        padding: 0 0.10rem !important;
+        font-size: 0.70rem !important;
         font-weight: 650 !important;
         white-space: nowrap !important;
         border-radius: 7px !important;
@@ -319,7 +311,7 @@ st.markdown(
         }
 
         .st-key-trade_controls div[data-testid="stHorizontalBlock"] {
-            gap: 0.04rem !important;
+            gap: 0 !important;
             width: 100% !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
@@ -328,8 +320,46 @@ st.markdown(
         .st-key-trade_controls div[data-testid="stColumn"],
         .st-key-trade_controls div[data-testid="column"] {
             min-width: 0 !important;
-            max-width: 100% !important;
+            max-width: none !important;
             overflow: visible !important;
+            box-sizing: border-box !important;
+        }
+
+        /* iPhone에서는 Streamlit widget의 내부 최소폭 때문에
+           st.columns 비율이 무시되는 경우가 있어서 직접 폭을 강제합니다. */
+        .st-key-trade_controls div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(1) {
+            flex: 0 0 10% !important;
+            width: 10% !important;
+            max-width: 10% !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(2) {
+            flex: 0 0 27% !important;
+            width: 27% !important;
+            max-width: 27% !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(3) {
+            flex: 0 0 10% !important;
+            width: 10% !important;
+            max-width: 10% !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(4) {
+            flex: 0 0 20% !important;
+            width: 20% !important;
+            max-width: 20% !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"]:nth-child(5) {
+            flex: 0 0 33% !important;
+            width: 33% !important;
+            max-width: 33% !important;
+        }
+
+        .st-key-trade_controls div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {
+            padding-left: 0.06rem !important;
+            padding-right: 0.06rem !important;
         }
 
         .st-key-trade_controls div[data-testid="stSlider"],
@@ -357,10 +387,10 @@ st.markdown(
         .st-key-trade_controls div[data-baseweb="select"] > div > div:first-child {
             flex: 1 1 auto !important;
             min-width: 0 !important;
-            width: auto !important;
+            width: 100% !important;
             justify-content: center !important;
             text-align: center !important;
-            font-size: 0.74rem !important;
+            font-size: 0.80rem !important;
             overflow: visible !important;
         }
 
@@ -373,6 +403,12 @@ st.markdown(
         .st-key-trade_controls div[data-baseweb="select"] svg {
             width: 13px !important;
             min-width: 13px !important;
+        }
+
+        .st-key-trade_controls div[data-baseweb="select"] {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
         }
 
         .st-key-trade_controls div[data-testid="stNumberInput"],
@@ -406,7 +442,7 @@ st.markdown(
         }
 
         .st-key-reset_top button {
-            font-size: 0.64rem !important;
+            font-size: 0.68rem !important;
         }
     }
 
@@ -1293,16 +1329,17 @@ def make_chart(df):
 # 상단
 # ============================================================
 
-title_col, reset_col, reset_spacer_col = st.columns(
-    [3.0, 0.95, 0.35],
+st.markdown(
+    "### 💰 $1000 챌린지 Rev2"
+)
+
+# 초기화 버튼은 별도 행의 왼쪽에 둡니다.
+# 모바일에서 화면 오른쪽으로 밀려 잘리는 문제를 원천적으로 방지합니다.
+reset_col, reset_spacer_col = st.columns(
+    [0.95, 3.05],
     gap="small",
     vertical_alignment="center",
 )
-
-with title_col:
-    st.markdown(
-        "### 💰 $1000 챌린지 Rev2"
-    )
 
 with reset_col:
     with st.container(key="reset_top"):
@@ -1512,7 +1549,7 @@ if not st.session_state.position_open:
 
     with st.container(key="trade_controls"):
         c1, c2, c3, c4, c5 = st.columns(
-            [0.34, 0.72, 0.34, 0.62, 1.42],
+            [10, 27, 10, 20, 33],
             gap="small",
             vertical_alignment="bottom",
         )
