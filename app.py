@@ -679,7 +679,8 @@ st.markdown(
     .st-key-compact_assets div[data-testid="stMetric"],
     .st-key-compact_performance div[data-testid="stMetric"],
     .st-key-compact_position div[data-testid="stMetric"],
-    .st-key-compact_result div[data-testid="stMetric"] {
+    .st-key-compact_result div[data-testid="stMetric"],
+    .st-key-compact_current div[data-testid="stMetric"] {
         min-height: 36px !important;
         height: 36px !important;
         padding: 1px 2px !important;
@@ -689,7 +690,8 @@ st.markdown(
     .st-key-compact_assets div[data-testid="stMetricLabel"] p,
     .st-key-compact_performance div[data-testid="stMetricLabel"] p,
     .st-key-compact_position div[data-testid="stMetricLabel"] p,
-    .st-key-compact_result div[data-testid="stMetricLabel"] p {
+    .st-key-compact_result div[data-testid="stMetricLabel"] p,
+    .st-key-compact_current div[data-testid="stMetricLabel"] p {
         font-size: 0.59rem !important;
         line-height: 1.0 !important;
         margin: 0 !important;
@@ -698,7 +700,8 @@ st.markdown(
     .st-key-compact_assets div[data-testid="stMetricValue"],
     .st-key-compact_performance div[data-testid="stMetricValue"],
     .st-key-compact_position div[data-testid="stMetricValue"],
-    .st-key-compact_result div[data-testid="stMetricValue"] {
+    .st-key-compact_result div[data-testid="stMetricValue"],
+    .st-key-compact_current div[data-testid="stMetricValue"] {
         font-size: 0.76rem !important;
         line-height: 1.0 !important;
         margin: 0 !important;
@@ -707,7 +710,8 @@ st.markdown(
     .st-key-compact_assets,
     .st-key-compact_performance,
     .st-key-compact_position,
-    .st-key-compact_result {
+    .st-key-compact_result,
+    .st-key-compact_current {
         margin: 0 !important;
         padding: 0 !important;
     }
@@ -715,7 +719,8 @@ st.markdown(
     .st-key-compact_assets div[data-testid="stHorizontalBlock"],
     .st-key-compact_performance div[data-testid="stHorizontalBlock"],
     .st-key-compact_position div[data-testid="stHorizontalBlock"],
-    .st-key-compact_result div[data-testid="stHorizontalBlock"] {
+    .st-key-compact_result div[data-testid="stHorizontalBlock"],
+    .st-key-compact_current div[data-testid="stHorizontalBlock"] {
         gap: 0.16rem !important;
     }
 
@@ -723,7 +728,8 @@ st.markdown(
         .st-key-compact_assets div[data-testid="stMetric"],
         .st-key-compact_performance div[data-testid="stMetric"],
         .st-key-compact_position div[data-testid="stMetric"],
-        .st-key-compact_result div[data-testid="stMetric"] {
+        .st-key-compact_result div[data-testid="stMetric"],
+        .st-key-compact_current div[data-testid="stMetric"] {
             min-height: 34px !important;
             height: 34px !important;
             padding: 0 1px !important;
@@ -732,14 +738,16 @@ st.markdown(
         .st-key-compact_assets div[data-testid="stMetricLabel"] p,
         .st-key-compact_performance div[data-testid="stMetricLabel"] p,
         .st-key-compact_position div[data-testid="stMetricLabel"] p,
-        .st-key-compact_result div[data-testid="stMetricLabel"] p {
+        .st-key-compact_result div[data-testid="stMetricLabel"] p,
+        .st-key-compact_current div[data-testid="stMetricLabel"] p {
             font-size: 0.56rem !important;
         }
 
         .st-key-compact_assets div[data-testid="stMetricValue"],
         .st-key-compact_performance div[data-testid="stMetricValue"],
         .st-key-compact_position div[data-testid="stMetricValue"],
-        .st-key-compact_result div[data-testid="stMetricValue"] {
+        .st-key-compact_result div[data-testid="stMetricValue"],
+        .st-key-compact_current div[data-testid="stMetricValue"] {
             font-size: 0.72rem !important;
         }
 
@@ -748,6 +756,27 @@ st.markdown(
             padding: 0.20rem 0.32rem !important;
             margin: 0.08rem 0 !important;
             font-size: 0.74rem !important;
+        }
+    }
+
+    /* 주요 액션 버튼은 터치하기 쉽도록 높이를 키움 */
+    .st-key-buy_area button,
+    .st-key-sell_area button,
+    .st-key-next_day_area button {
+        min-height: 44px !important;
+        height: 44px !important;
+        font-size: 0.86rem !important;
+        font-weight: 700 !important;
+        border-radius: 9px !important;
+    }
+
+    @media (max-width: 600px) {
+        .st-key-buy_area button,
+        .st-key-sell_area button,
+        .st-key-next_day_area button {
+            min-height: 46px !important;
+            height: 46px !important;
+            font-size: 0.88rem !important;
         }
     }
 
@@ -2094,27 +2123,28 @@ st.plotly_chart(
 # 현재 정보
 # ============================================================
 
-info1, info2 = st.columns(2)
+with st.container(key="compact_current"):
+    info1, info2 = st.columns(2)
 
-with info1:
-    st.metric(
-        "현재 가격",
-        format_price(
-            current_price(df)
-        ),
-    )
+    with info1:
+        st.metric(
+            "현재 가격",
+            format_price(
+                current_price(df)
+            ),
+        )
 
-with info2:
-    current_step_text = (
-        f"Day {current_step_number()}"
-        if timeframe == "일봉"
-        else f"{current_step_number()}봉"
-    )
+    with info2:
+        current_step_text = (
+            f"Day {current_step_number()}"
+            if timeframe == "일봉"
+            else f"{current_step_number()}봉"
+        )
 
-    st.metric(
-        "현재 시점",
-        current_step_text,
-    )
+        st.metric(
+            "현재 시점",
+            current_step_text,
+        )
 
 
 # ============================================================
