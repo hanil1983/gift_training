@@ -1,0 +1,33 @@
+REV2 BTC 초고속 버전 설치 방법
+
+구성
+- app.py
+- prepare_btc_data.py
+- requirements.txt
+- data/BTCUSDT_15m_5y.parquet  ← 준비 스크립트 실행 후 생성
+
+1. 위 3개 파일을 GitHub repository의 같은 폴더에 둡니다.
+
+2. VS Code 터미널에서 필요한 패키지를 설치합니다.
+   pip install -r requirements.txt
+
+3. BTC 5년치 15분봉 데이터를 한 번만 생성합니다.
+   python prepare_btc_data.py
+
+4. 실행이 끝나면 아래 파일이 생깁니다.
+   data/BTCUSDT_15m_5y.parquet
+
+5. 모두 GitHub에 업로드합니다.
+   git add .
+   git commit -m "Add BTC ultrafast local data"
+   git push
+
+6. Streamlit Cloud의 Main file path는 app.py로 설정합니다.
+
+작동 방식
+- 앱 실행 중 Binance에 5년치 데이터를 다운로드하지 않습니다.
+- GitHub에 같이 올라간 Parquet 파일 하나만 읽습니다.
+- 15분봉은 원본 데이터를 그대로 사용합니다.
+- 1시간/4시간/일봉은 15분봉에서 즉시 변환합니다.
+- 시간봉 변경 시 계좌 자산/손익/거래수/승률/손익비는 그대로 유지됩니다.
+- 데이터 갱신이 필요할 때만 prepare_btc_data.py를 다시 실행하고 push하면 됩니다.
