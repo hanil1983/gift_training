@@ -79,7 +79,6 @@ st.markdown(
         max-width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        overflow: hidden !important;
         box-sizing: border-box !important;
     }
 
@@ -100,14 +99,13 @@ st.markdown(
         max-width: 100% !important;
         height: 30px !important;
         min-height: 30px !important;
-        padding: 0 0.08rem !important;
+        padding: 0 0.04rem !important;
         margin: 0 !important;
-        font-size: 0.68rem !important;
+        font-size: 0.66rem !important;
         font-weight: 650 !important;
         white-space: nowrap !important;
         border-radius: 7px !important;
         box-sizing: border-box !important;
-        overflow: hidden !important;
     }
 
     div[data-testid="stMetric"] {
@@ -321,7 +319,7 @@ st.markdown(
         }
 
         .st-key-trade_controls div[data-testid="stHorizontalBlock"] {
-            gap: 0.06rem !important;
+            gap: 0.04rem !important;
             width: 100% !important;
             max-width: 100% !important;
             box-sizing: border-box !important;
@@ -351,8 +349,25 @@ st.markdown(
         }
 
         .st-key-trade_controls div[data-baseweb="select"] > div {
-            padding-left: 0.12rem !important;
-            padding-right: 0.10rem !important;
+            padding-left: 0.16rem !important;
+            padding-right: 0.12rem !important;
+            min-width: 0 !important;
+        }
+
+        .st-key-trade_controls div[data-baseweb="select"] > div > div:first-child {
+            flex: 1 1 auto !important;
+            min-width: 0 !important;
+            width: auto !important;
+            justify-content: center !important;
+            text-align: center !important;
+            font-size: 0.74rem !important;
+            overflow: visible !important;
+        }
+
+        .st-key-trade_controls div[data-baseweb="select"] span {
+            white-space: nowrap !important;
+            overflow: visible !important;
+            text-overflow: clip !important;
         }
 
         .st-key-trade_controls div[data-baseweb="select"] svg {
@@ -391,7 +406,7 @@ st.markdown(
         }
 
         .st-key-reset_top button {
-            font-size: 0.66rem !important;
+            font-size: 0.64rem !important;
         }
     }
 
@@ -1278,8 +1293,8 @@ def make_chart(df):
 # 상단
 # ============================================================
 
-title_col, reset_col = st.columns(
-    [3.0, 1.0],
+title_col, reset_col, reset_spacer_col = st.columns(
+    [3.0, 0.95, 0.35],
     gap="small",
     vertical_alignment="center",
 )
@@ -1497,7 +1512,7 @@ if not st.session_state.position_open:
 
     with st.container(key="trade_controls"):
         c1, c2, c3, c4, c5 = st.columns(
-            [0.38, 1.00, 0.38, 0.72, 1.04],
+            [0.34, 0.72, 0.34, 0.62, 1.42],
             gap="small",
             vertical_alignment="bottom",
         )
