@@ -82,10 +82,21 @@ st.markdown(
         padding-right: 0 !important;
     }
 
+    .st-key-reset_top > div,
+    .st-key-reset_top div[data-testid="stVerticalBlock"] {
+        width: 100% !important;
+    }
+
+    .st-key-reset_top div[data-testid="stButton"] {
+        width: 68px !important;
+        margin-left: auto !important;
+        margin-right: 0 !important;
+    }
+
     .st-key-reset_top button {
         width: 68px !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
+        min-width: 68px !important;
+        max-width: 68px !important;
         height: 30px !important;
         min-height: 30px !important;
         padding: 0 !important;
